@@ -26,6 +26,70 @@ def General_Search(problem : Graph.Graph, search : SearchEnum):
         expand_queue(queue,opened_nodes,problem,search)
     print("failure to find path between S and G")
     return False
+
+def Make_Queue(node):
+    """
+    Returns a queue with the node inserted
+
+    Parameters
+    ----------
+    node : Graph.Node
+        Represents a node in the graph.
+
+    """
+    queue=[]
+    
+    return queue
+
+def Make_Node(nodeName):
+    """
+    
+
+    Parameters
+    ----------
+    nodeName : str
+        Represents the name of the node
+
+    Returns
+    -------
+    A Node of type Graph.Node
+
+    """
+    
+    return
+
+def Remove_Front(queue):
+    """
+
+    Parameters
+    ----------
+    queue : list
+       Represents the queue of paths.
+
+    Returns 
+    -------
+    the removed node from the front of the queue
+
+    """
+    return
+
+def Expand(node):
+    """
+    
+
+    Parameters
+    ----------
+    node : Graph.Node
+        Represents a node in the Graph
+
+    Returns
+    -------
+    a list of paths to add to the queue.
+
+    """
+    
+    return
+   
 def expand_queue(queue, pathsToAddToQueue, problem, search):
     """
     Add the new paths created from the opened nodes to the queue based on the search strategy.
