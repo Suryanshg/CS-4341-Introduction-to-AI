@@ -29,7 +29,7 @@ def General_Search(problem : Graph.Graph, search : SearchEnum):
 
 def Make_Queue(node):
     """
-    Returns a queue with the node inserted
+    Returns a queue with the path inserted
 
     Parameters
     ----------
@@ -41,14 +41,14 @@ def Make_Queue(node):
     
     return queue
 
-def Make_Node(nodeName):
+def Make_Node(node):
     """
     
 
     Parameters
     ----------
-    nodeName : str
-        Represents the name of the node
+    node : Graph.Node
+        Represents a node from the Graph
 
     Returns
     -------
@@ -106,23 +106,23 @@ def expand_queue(queue, pathsToAddToQueue, problem, search):
         The search method to use to search the graph.
     """
     #Fill in the below if and elif bodies to implement how the respective searches add new paths to the queue.
-    if search == SearchEnum.DEPTH_FIRST_SEARCH:
+    # if search == SearchEnum.DEPTH_FIRST_SEARCH:
 
-    elif search == SearchEnum.BREADTH_FIRST_SEARCH:
+    # elif search == SearchEnum.BREADTH_FIRST_SEARCH:
 
-    elif search == SearchEnum.DEPTH_LIMITED_SEARCH:
+    # elif search == SearchEnum.DEPTH_LIMITED_SEARCH:
 
-    elif search == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
+    # elif search == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
 
-    elif search == SearchEnum.UNIFORM_COST_SEARCH:
+    # elif search == SearchEnum.UNIFORM_COST_SEARCH:
 
-    elif search == SearchEnum.GREEDY_SEARCH:
+    # elif search == SearchEnum.GREEDY_SEARCH:
 
-    elif search == SearchEnum.A_STAR:
+    # elif search == SearchEnum.A_STAR:
 
-    elif search == SearchEnum.HILL_CLIMBING:
+    # elif search == SearchEnum.HILL_CLIMBING:
 
-    elif search == SearchEnum.BEAM_SEARCH:
+    # elif search == SearchEnum.BEAM_SEARCH:
 
 def main(filename : str):
     """
