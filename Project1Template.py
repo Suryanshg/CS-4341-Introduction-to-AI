@@ -3,6 +3,62 @@ import Graph
 import sys
 from collections import OrderedDict
 # Template for Project 1 of CS 4341 - A2020
+
+class Path:
+    """
+    A data structure representing paths using nodes and f(n)
+    ...
+
+    Attributes
+    ----------
+    nodes : list[Graph.State]
+        The nodes in the path. 
+    fn : float
+        represents the cost of the path 
+    Methods
+    -------
+    setCost(cost)
+        Set the fn value for the path with the given cost.
+    getPath()
+        Return the nodes in the form of a list
+    addNode(node)
+        Adds a given node to the path
+    """
+
+   
+    def __init__(self):
+        self.nodes = []
+        self.fn=0.0
+    
+    def setCost(self,cost):
+        """
+        Set the fn value for the path with the given cost.
+
+        Parameters
+        ----------
+       cost : float
+             cost represents the new value for fn
+        """
+
+        self.fn=cost
+
+    def getPath(self):
+        """
+        Return the list of nodes in the path.
+        """
+        return self.nodes
+
+    def addNode(self,node):
+        """
+        Adds a given node to the path
+
+        Parameters
+        ----------
+       node : Graph.State
+             represents a vertex in the Graph
+        """
+        self.nodes.insert(0,node)
+
 def General_Search(problem, searchMethod):
     """
     Return the solution path or failure to reach state G from state S. 
@@ -20,15 +76,17 @@ def General_Search(problem, searchMethod):
     # Make_Queue, Make_Queue_Node, Remove_Front, Terminal_State, Expand, and expand_queue are to be implemented by the student. 
     # Implementation of the below pseudocode may vary slightly depending on the data structures used.
 
-    # queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
-    # while len(queue) > 0:
-    #     node = Remove_Front(queue) # Remove and return the node to expand from the queue
-    #     if Terminal_State(node) is solution: # solution is not a defined variable, but this statement represents checking whether you have expanded the goal node.
-    #         return node # If this is a solution, return the node containing the path to reach it.
-    #     opened_nodes = Expand(node) # Get new nodes to add to the queue based on the expanded node.
-    #     expand_queue(queue,opened_nodes,problem,searchMethod)
+    queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
+    while len(queue) > 0:
+        node = Remove_Front(queue) # Remove and return the node to expand from the queue
+        if Terminal_State(node) == finalState: # solution is not a defined variable, but this statement represents checking whether you have expanded the goal node.
+            return node # If this is a solution, return the node containing the path to reach it.
+        opened_nodes = Expand(problem, node) # Get new nodes to add to the queue based on the expanded node.
+        printQueue(opened_nodes)
+        expand_queue(queue,opened_nodes,problem,searchMethod)
     return False
-#def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
+
+def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
     """
     Add the new nodes created from the opened nodes to the queue based on the search strategy.
 
@@ -61,6 +119,85 @@ def General_Search(problem, searchMethod):
     # elif search == SearchEnum.HILL_CLIMBING:
 
     # elif search == SearchEnum.BEAM_SEARCH:
+
+def Make_Queue(path):
+    """
+    Returns a queue with the path inserted
+
+    Parameters
+    ----------
+    path : Path
+        Represents the path
+    """  
+    Q=[path]
+    return Q
+
+def Make_Queue_Node(node):
+    """
+    Returns a Path with the node inserted
+
+    Parameters
+    ----------
+    node : Graph.State
+        The vertex representing the node
+    """   
+    path = Path()
+    path.addNode(node)
+    return path
+
+def Remove_Front(queue):
+    """
+    Returns a path popped out from the front of queue
+
+    Parameters
+    ----------
+    queue : list of Path
+        The list representing the paths
+    """   
+    returnedPath=queue.pop(0)
+    return returnedPath
+
+def Terminal_State(path):
+    """
+    Returns a end state's name from the path
+
+    Parameters
+    ----------
+    path :  Path
+        represents the path
+    """   
+    
+    return path.nodes[0].name
+
+def Expand(problem,path):
+    """
+    Returns a list of children nodes from the path's last node
+
+    Parameters
+    ----------
+    problem : Graph.Graph
+        The graph to search from S to G.
+    path :  Path
+        represents the path
+    """   
+    newPaths=[]
+    curNode=path.nodes[0] # Current Node - The node to expand
+    for child in curNode.edges:
+        parentPath=path
+        childNode = problem.getState(child)
+        parentPath.addNode(childNode)
+        newPaths.append(parentPath)
+    newPaths.sort(key=path.nodes[0].name)
+
+    return newPaths
+
+def printQueue(queue):
+    for path in queue:
+        for node in path.nodes:
+            print(node.name)
+
+
+
 
 def main(filename):
     """
