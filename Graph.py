@@ -1,71 +1,71 @@
 class Graph:
     """
-    A dictionary of the nodes in the graph with functions for adding vertices and edges. Handles parsed input to build graph.
+    A dictionary of the states in the graph with functions for adding vertices and edges. Handles parsed input to build graph.
 
     ...
 
     Attributes
     ----------
-    nodes : dict[str, Graph.Node]
-        The nodes in the graph. Key is the node name, value is the node itself.
+    states : dict[str, Graph.State]
+        The states in the graph. Key is the state name, value is the state itself.
 
     Methods
     -------
-    addNodesAndEdge(node1, node2, cost)
-        Add node1 and node2 if not present and add the edge between them.
-    setHeuristic(node, heuristic)
-        Set the heuristic value for the node with the given nodeName.
+    addStatesAndEdge(state1, state2, cost)
+        Add state1 and state2 if not present and add the edge between them.
+    setHeuristic(state, heuristic)
+        Set the heuristic value for the state with the given stateName.
     getState(name)
-        Return the Node with the given name.
+        Return the State with the given name.
     """
 
-    nodes : dict 
+    states : dict 
     def __init__(self):
-        self.nodes = {}
-    def addNodesAndEdge(self, node1 : str, node2 : str, cost : float):
+        self.states = {}
+    def addStatesAndEdge(self, state1, state2, cost):
         """
-        Add nodes for node1 and node2 if they do not already exist in the graph and add an edge between them.
+        Add states for state1 and state2 if they do not already exist in the graph and add an edge between them.
 
         Parameters
         ----------
-        node1 : str
-            The name of one node.
-        node2 : str
-            The name of a node adjacent to node1.
+        state1 : str
+            The name of one state.
+        state2 : str
+            The name of a state adjacent to state1.
         cost : float
-            The cost of the edge between node1 and node2.
+            The cost of the edge between state1 and state2.
         """
 
-        if (node1 not in self.nodes):
-            self.nodes[node1] = Node(node1)
-        if (node2 not in self.nodes):
-            self.nodes[node2] = Node(node2)
-        self.nodes[node1].addEdges(self.nodes[node2], cost)
-    def setHeuristic(self, nodeName : str, heuristic : float):
+        if (state1 not in self.states):
+            self.states[state1] = State(state1)
+        if (state2 not in self.states):
+            self.states[state2] = State(state2)
+        self.states[state1].addEdges(self.states[state2], cost)
+    def setHeuristic(self, stateName, heuristic):
         """
-        Set the heuristic for the given node.
+        Set the heuristic for the given state.
 
         Parameters
         ----------
-        nodeName : str
-            The name of the node to set the heuristic for
+        stateName : str
+            The name of the state to set the heuristic for
         heuristic : float
-            The (under)estimated distance to the goal node of the graph.
+            The (under)estimated distance to the goal state of the graph.
         """
 
-        self.nodes[nodeName].setHeuristic(heuristic)
-    def getState(self, name : str):
+        self.states[stateName].setHeuristic(heuristic)
+    def getState(self, name):
         """
-        Return the node with the given name.
+        Return the state with the given name.
 
         Parameters
         ----------
         name : str
-            The name of the node to return.
+            The name of the state to return.
         """
 
-        return self.nodes[name]
-class Node:
+        return self.states[name]
+class State:
     """
     The structure for a vertex with edges as a property.
 
@@ -74,25 +74,25 @@ class Node:
     Attributes
     ----------
     name : str
-        String identifier for this node.
+        String identifier for this state.
     heuristic : float
-        The (under)estimated distance from this node to the goal node of the graph.
+        The (under)estimated distance from this state to the goal state of the graph.
     edges : dict
-        A dictionary relating the names of the adjacent nodes to the respective path cost from itself to this node.
+        A dictionary relating the names of the adjacent states to the respective path cost from itself to this state.
 
     Methods
     -------
     setHeuristic(heuristic)
-        Set the heuristic value associated with this node.
-    addEdges(otherNode, cost)
-        Add a bi-directional edge between this node and otherNode with the given cost.
+        Set the heuristic value associated with this state.
+    addEdges(otherState, cost)
+        Add a bi-directional edge between this state and otherState with the given cost.
     """
     name : str
     heuristic : float
     edges : dict  
-    def __init__(self, name : str):
+    def __init__(self, name):
         """
-        Constructor for a Node object. Does not create edges.
+        Constructor for a State object. Does not create edges.
 
         Parameters
         ----------
@@ -103,25 +103,25 @@ class Node:
         self.name = name
         self.heuristic = 0
         self.edges = {}
-    def setHeuristic(self, heuristic : float):
+    def setHeuristic(self, heuristic):
         """
         heuristic : float
-            The (under)estimated distance to the goal node of the graph.
+            The (under)estimated distance to the goal state of the graph.
         """
         
         self.heuristic = heuristic
-    def addEdges(self, otherNode, cost : float):
+    def addEdges(self, otherState, cost):
         """
-        Add an edge from this node to otherNode and from otherNode to this node since all edges are bi-directional.
+        Add an edge from this state to otherState and from otherState to this state since all edges are bi-directional.
 
         Parameters
         ----------
-        otherNode : Node
-            The node to add a bi-directional edge to this node.
+        otherState : State
+            The state to add a bi-directional edge to this state.
         cost : float
             The cost of the edge being added.
         """
 
-        self.edges[otherNode.name] = cost
-        otherNode.edges[self.name] = cost
+        self.edges[otherState.name] = cost
+        otherState.edges[self.name] = cost
 
