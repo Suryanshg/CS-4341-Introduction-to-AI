@@ -179,22 +179,35 @@ def Expand(problem,path):
         The graph to search from S to G.
     path :  Path
         represents the path
-    """   
+    """  
     newPaths=[]
     curNode=path.nodes[0] # Current Node - The node to expand
+
+
     for child in curNode.edges:
-        parentPath=path
-        childNode = problem.getState(child)
+        parentPath=Path() # Setting a parent node
+        for node in path.nodes:
+            parentPath.nodes.append(node)
+        parentPath.fn=path.fn   
+        childNode = problem.getState(child) # Get the corresponding node with the name
         parentPath.addNode(childNode)
         newPaths.append(parentPath)
-    newPaths.sort(key=path.nodes[0].name)
+       
 
     return newPaths
 
 def printQueue(queue):
+    print("[",end='')
     for path in queue:
+        print("<",end='')
+        countNode=0
         for node in path.nodes:
-            print(node.name)
+            print(node.name,end='')
+            countNode+=1
+            if(countNode<len(path.nodes)):
+                print(",",end='')
+        print(">",end='')
+    print("]")
 
 
 
