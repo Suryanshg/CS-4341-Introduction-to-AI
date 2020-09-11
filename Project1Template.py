@@ -77,15 +77,16 @@ def General_Search(problem, searchMethod):
     # Implementation of the below pseudocode may vary slightly depending on the data structures used.
 
     queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
-    while len(queue) > 0:
-        printQueue(queue)
+    printQueue(queue)
+    while len(queue) > 0:  
         node = Remove_Front(queue) # Remove and return the node to expand from the queue
         if Terminal_State(node) == finalState: # solution is not a defined variable, but this statement represents checking whether you have expanded the goal node.
             return node # If this is a solution, return the node containing the path to reach it.
         opened_nodes = Expand(problem, node) # Get new nodes to add to the queue based on the expanded node.
         #printQueue(opened_nodes)
         queue=expand_queue(queue,opened_nodes,problem,searchMethod)
-        printQueue(queue)
+        if (len(queue)!=0):
+            printQueue(queue)
     return False
 
 def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
@@ -112,8 +113,17 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
     elif searchMethod == SearchEnum.BREADTH_FIRST_SEARCH:
         queue.extend(nodesToAddToQueue)
         newQueue=queue
-    
-    # elif searchMethod == SearchEnum.DEPTH_LIMITED_SEARCH:
+
+    elif searchMethod == SearchEnum.DEPTH_LIMITED_SEARCH:
+        pathsToRemove=[]
+        for path in nodesToAddToQueue:
+            if (len(path.nodes)>3): # discard those paths whose depth is greater than 2 + 1
+                pathsToRemove.append(path)
+        for path in pathsToRemove:
+            nodesToAddToQueue.remove(path)
+        nodesToAddToQueue.extend(queue)
+        newQueue=nodesToAddToQueue
+
 
     # elif searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
 
