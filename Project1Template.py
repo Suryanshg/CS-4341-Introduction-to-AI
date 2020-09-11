@@ -244,7 +244,7 @@ def printQueue(queue):
         print(">",end='')
     print("]")
 
-def g(path): 
+def gn(path): 
     """
     Calculates the cost value of the path and returns it
     """
@@ -252,6 +252,12 @@ def g(path):
     for i in range(len(path.nodes)-1):
         cost+=path.nodes[i].edges[path.nodes[i+1].name]
     return cost
+
+def hn(path):
+    """
+    Calculates the heuristic value of the path and returns it
+    """
+    return path.nodes[0].heuristic
 
 
 
