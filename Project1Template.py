@@ -190,9 +190,79 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
             printQueue(newQueue, True)
             
 
-    # elif searchMethod == SearchEnum.GREEDY_SEARCH:
+    elif searchMethod == SearchEnum.GREEDY_SEARCH:
+        for path in nodesToAddToQueue: # Set the f(n) for all paths
+            path.fn=hn(path) # f(n) = h(n) for Greedy Search
+        
+        for path in nodesToAddToQueue: # Adding children path to the main queue in order
+            inserted=False
+            for i in range(len(queue)):    
+                if(path.fn < queue[i].fn): # if child path has different annd less f(n) then it goes inside first
+                    queue.insert(i,path)
+                    inserted=True
+                    break
+                elif(path.fn == queue[i].fn): # the two paths have same value
+                    if(path.nodes[0].name != queue[i].nodes[0].name): # If the two paths end at different nodes 
+                        if(path.nodes[0].name < queue[i].nodes[0].name): # child path's node is alphabetically first, then insert it before the existing queue
+                            queue.insert(i,path)
+                            inserted=True
+                            break
+                    elif(path.nodes[0].name == queue[i].nodes[0].name): # If the two paths end at the same node
+                        if(len(path.nodes) != len(queue[i].nodes)): # If the two paths have different length
+                            if(len(path.nodes) < len(queue[i].nodes)): # Put in the child path with the shortest length first
+                                queue.insert(i,path)
+                                inserted=True
+                                break
+                        else: # The two paths have same length and end at same node     
+                            for j in range(1,len(path.nodes)): # Sorting in Lexicographic order
+                                if(path.nodes[j] < queue[i].nodes[j]):
+                                    queue.insert(i, path)
+                                    inserted=True
+                                    break
+                            break
+            if(not inserted): # Should come at the end
+                queue.append(path)
+        newQueue=queue
 
-    # elif searchMethod == SearchEnum.A_STAR:
+        if (len(newQueue)!=0):
+            printQueue(newQueue, True)
+
+    elif searchMethod == SearchEnum.A_STAR:
+        for path in nodesToAddToQueue: # Set the f(n) for all paths
+            path.fn = gn(path) + hn(path) # f(n) = g(n) + h(n) for A* search
+        
+        for path in nodesToAddToQueue: # Adding children path to the main queue in order
+            inserted=False
+            for i in range(len(queue)):    
+                if(path.fn < queue[i].fn): # if child path has different annd less f(n) then it goes inside first
+                    queue.insert(i,path)
+                    inserted=True
+                    break
+                elif(path.fn == queue[i].fn): # the two paths have same value
+                    if(path.nodes[0].name != queue[i].nodes[0].name): # If the two paths end at different nodes 
+                        if(path.nodes[0].name < queue[i].nodes[0].name): # child path's node is alphabetically first, then insert it before the existing queue
+                            queue.insert(i,path)
+                            inserted=True
+                            break
+                    elif(path.nodes[0].name == queue[i].nodes[0].name): # If the two paths end at the same node
+                        if(len(path.nodes) != len(queue[i].nodes)): # If the two paths have different length
+                            if(len(path.nodes) < len(queue[i].nodes)): # Put in the child path with the shortest length first
+                                queue.insert(i,path)
+                                inserted=True
+                                break
+                        else: # The two paths have same length and end at same node     
+                            for j in range(1,len(path.nodes)): # Sorting in Lexicographic order
+                                if(path.nodes[j] < queue[i].nodes[j]):
+                                    queue.insert(i, path)
+                                    inserted=True
+                                    break
+                            break
+            if(not inserted): # Should come at the end
+                queue.append(path)
+        newQueue=queue
+
+        if (len(newQueue)!=0):
+            printQueue(newQueue, True)
 
     # elif searchMethod == SearchEnum.HILL_CLIMBING:
 
