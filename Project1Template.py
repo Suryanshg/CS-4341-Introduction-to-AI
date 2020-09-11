@@ -78,7 +78,11 @@ def General_Search(problem, searchMethod):
     L=0 # Variable Limit for IDS 
     queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
     if(searchMethod in informedSearchAlgos):
-        printQueue(queue, True)
+        if(searchMethod==SearchEnum.UNIFORM_COST_SEARCH):
+            printQueue(queue, True)
+        else:
+            queue[0].fn = hn(queue[0])
+            printQueue(queue, True)
     else:
         printQueue(queue, False)
     while len(queue) > 0:  
