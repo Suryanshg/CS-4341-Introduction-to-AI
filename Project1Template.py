@@ -109,8 +109,10 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
         nodesToAddToQueue.extend(queue)
         newQueue=nodesToAddToQueue
         
-    # elif searchMethod == SearchEnum.BREADTH_FIRST_SEARCH:
-
+    elif searchMethod == SearchEnum.BREADTH_FIRST_SEARCH:
+        queue.extend(nodesToAddToQueue)
+        newQueue=queue
+    
     # elif searchMethod == SearchEnum.DEPTH_LIMITED_SEARCH:
 
     # elif searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
