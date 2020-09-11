@@ -72,12 +72,15 @@ def General_Search(problem, searchMethod):
     """
     initialState = 'S' # name of the initial state
     finalState = 'G' # Name of the final state
-
+    informedSearchAlgos=[SearchEnum.UNIFORM_COST_SEARCH, SearchEnum.GREEDY_SEARCH, SearchEnum.A_STAR, SearchEnum.HILL_CLIMBING, SearchEnum.BEAM_SEARCH ]
     # Make_Queue, Make_Queue_Node, Remove_Front, Terminal_State, Expand, and expand_queue are to be implemented by the student. 
     # Implementation of the below pseudocode may vary slightly depending on the data structures used.
     L=0 # Variable Limit for IDS 
     queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
-    printQueue(queue, False)
+    if(searchMethod in informedSearchAlgos):
+        printQueue(queue, True)
+    else:
+        printQueue(queue, False)
     while len(queue) > 0:  
         node = Remove_Front(queue) # Remove and return the node to expand from the queue
         if Terminal_State(node) == finalState: # solution is not a defined variable, but this statement represents checking whether you have expanded the goal node.
@@ -359,7 +362,7 @@ def printQueue(queue, informedSearch):
                 countNode+=1
                 if(countNode<len(path.nodes)):
                     print(",",end='')
-            print(">",end='')
+            print("> ",end='')
         print("]")
     else:
         print("[",end='')
