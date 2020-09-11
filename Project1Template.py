@@ -78,12 +78,14 @@ def General_Search(problem, searchMethod):
 
     queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
     while len(queue) > 0:
+        printQueue(queue)
         node = Remove_Front(queue) # Remove and return the node to expand from the queue
         if Terminal_State(node) == finalState: # solution is not a defined variable, but this statement represents checking whether you have expanded the goal node.
             return node # If this is a solution, return the node containing the path to reach it.
         opened_nodes = Expand(problem, node) # Get new nodes to add to the queue based on the expanded node.
-        printQueue(opened_nodes)
-        expand_queue(queue,opened_nodes,problem,searchMethod)
+        #printQueue(opened_nodes)
+        queue=expand_queue(queue,opened_nodes,problem,searchMethod)
+        printQueue(queue)
     return False
 
 def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
@@ -101,24 +103,28 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
     searchMethod : SearchEnum
         The search method to use to search the graph.
     """
+    newQueue=[]
     #Fill in the below if and elif bodies to implement how the respective searches add new nodes to the queue.
-    # if search == SearchEnum.DEPTH_FIRST_SEARCH:
+    if searchMethod == SearchEnum.DEPTH_FIRST_SEARCH:        
+        nodesToAddToQueue.extend(queue)
+        newQueue=nodesToAddToQueue
+        
+    # elif searchMethod == SearchEnum.BREADTH_FIRST_SEARCH:
 
-    # elif search == SearchEnum.BREADTH_FIRST_SEARCH:
+    # elif searchMethod == SearchEnum.DEPTH_LIMITED_SEARCH:
 
-    # elif search == SearchEnum.DEPTH_LIMITED_SEARCH:
+    # elif searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
 
-    # elif search == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
+    # elif searchMethod == SearchEnum.UNIFORM_COST_SEARCH:
 
-    # elif search == SearchEnum.UNIFORM_COST_SEARCH:
+    # elif searchMethod == SearchEnum.GREEDY_SEARCH:
 
-    # elif search == SearchEnum.GREEDY_SEARCH:
+    # elif searchMethod == SearchEnum.A_STAR:
 
-    # elif search == SearchEnum.A_STAR:
+    # elif searchMethod == SearchEnum.HILL_CLIMBING:
 
-    # elif search == SearchEnum.HILL_CLIMBING:
-
-    # elif search == SearchEnum.BEAM_SEARCH:
+    # elif searchMethod == SearchEnum.BEAM_SEARCH:
+    return newQueue
 
 def Make_Queue(path):
     """
@@ -182,18 +188,20 @@ def Expand(problem,path):
     """  
     newPaths=[]
     curNode=path.nodes[0] # Current Node - The node to expand
-
-
     for child in curNode.edges:
-        parentPath=Path() # Setting a parent node
+        childExistsInPath=False
+        #Need to check if child isn't there in the path
         for node in path.nodes:
-            parentPath.nodes.append(node)
-        parentPath.fn=path.fn   
-        childNode = problem.getState(child) # Get the corresponding node with the name
-        parentPath.addNode(childNode)
-        newPaths.append(parentPath)
-       
-
+            if node.name==child:
+                childExistsInPath=True
+        if (not childExistsInPath): # If the child doesn't exists in the path, add it
+            parentPath=Path() # Setting a parent node
+            for node in path.nodes:
+                parentPath.nodes.append(node)
+            parentPath.fn=path.fn   
+            childNode = problem.getState(child) # Get the corresponding node with the name
+            parentPath.addNode(childNode)
+            newPaths.append(parentPath)
     return newPaths
 
 def printQueue(queue):
