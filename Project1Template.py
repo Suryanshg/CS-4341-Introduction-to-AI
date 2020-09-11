@@ -75,7 +75,7 @@ def General_Search(problem, searchMethod):
 
     # Make_Queue, Make_Queue_Node, Remove_Front, Terminal_State, Expand, and expand_queue are to be implemented by the student. 
     # Implementation of the below pseudocode may vary slightly depending on the data structures used.
-
+    L=0 # Variable Limit for IDS 
     queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
     printQueue(queue)
     while len(queue) > 0:  
@@ -84,12 +84,18 @@ def General_Search(problem, searchMethod):
             return node # If this is a solution, return the node containing the path to reach it.
         opened_nodes = Expand(problem, node) # Get new nodes to add to the queue based on the expanded node.
         #printQueue(opened_nodes)
-        queue=expand_queue(queue,opened_nodes,problem,searchMethod)
+        queue=expand_queue(queue,opened_nodes,problem,searchMethod, L)
         if (len(queue)!=0):
             printQueue(queue)
+        if (len(queue)==0 and searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH): #If unsuccessful on IDS
+            L+=1
+            print("\n") 
+            queue=Make_Queue(Make_Queue_Node(problem.getState(initialState)))
+            printQueue(queue)
+        
     return False
 
-def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
+def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
     """
     Add the new nodes created from the opened nodes to the queue based on the search strategy.
 
@@ -125,7 +131,16 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod):
         newQueue=nodesToAddToQueue
 
 
-    # elif searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
+    elif searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
+        pathsToRemove=[]
+        i=limit
+        for path in nodesToAddToQueue:
+            if (len(path.nodes)>i+1): # discard those paths whose depth is greater than 2 + 1
+                pathsToRemove.append(path)
+        for path in pathsToRemove:
+            nodesToAddToQueue.remove(path)
+        nodesToAddToQueue.extend(queue)
+        newQueue=nodesToAddToQueue
 
     # elif searchMethod == SearchEnum.UNIFORM_COST_SEARCH:
 
