@@ -77,7 +77,7 @@ def General_Search(problem, searchMethod):
     # Implementation of the below pseudocode may vary slightly depending on the data structures used.
     L=0 # Variable Limit for IDS 
     queue = Make_Queue(Make_Queue_Node(problem.getState(initialState))) # Initialize the data structures to start the search at initialState
-    printQueue(queue)
+    printQueue(queue, False)
     while len(queue) > 0:  
         node = Remove_Front(queue) # Remove and return the node to expand from the queue
         if Terminal_State(node) == finalState: # solution is not a defined variable, but this statement represents checking whether you have expanded the goal node.
@@ -85,13 +85,11 @@ def General_Search(problem, searchMethod):
         opened_nodes = Expand(problem, node) # Get new nodes to add to the queue based on the expanded node.
         #printQueue(opened_nodes)
         queue=expand_queue(queue,opened_nodes,problem,searchMethod, L)
-        if (len(queue)!=0):
-            printQueue(queue)
         if (len(queue)==0 and searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH): #If unsuccessful on IDS
             L+=1
             print("\n") 
             queue=Make_Queue(Make_Queue_Node(problem.getState(initialState)))
-            printQueue(queue)
+            printQueue(queue, False)
         
     return False
 
@@ -115,10 +113,16 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
     if searchMethod == SearchEnum.DEPTH_FIRST_SEARCH:        
         nodesToAddToQueue.extend(queue)
         newQueue=nodesToAddToQueue
+
+        if (len(newQueue)!=0):
+            printQueue(newQueue, False)
         
     elif searchMethod == SearchEnum.BREADTH_FIRST_SEARCH:
         queue.extend(nodesToAddToQueue)
         newQueue=queue
+
+        if (len(newQueue)!=0):
+            printQueue(newQueue, False)
 
     elif searchMethod == SearchEnum.DEPTH_LIMITED_SEARCH:
         pathsToRemove=[]
@@ -129,6 +133,9 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
             nodesToAddToQueue.remove(path)
         nodesToAddToQueue.extend(queue)
         newQueue=nodesToAddToQueue
+
+        if (len(newQueue)!=0):
+            printQueue(newQueue, False)
 
 
     elif searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH:
@@ -142,7 +149,46 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
         nodesToAddToQueue.extend(queue)
         newQueue=nodesToAddToQueue
 
-    # elif searchMethod == SearchEnum.UNIFORM_COST_SEARCH:
+        if (len(newQueue)!=0):
+            printQueue(newQueue, False)
+
+    elif searchMethod == SearchEnum.UNIFORM_COST_SEARCH:
+        for path in nodesToAddToQueue: # Set the f(n) for all paths
+            path.fn=gn(path) # f(n) = g(n) for Uniform Cost Search
+        
+        for path in nodesToAddToQueue: # Adding children path to the main queue in order
+            inserted=False
+            for i in range(len(queue)):    
+                if(path.fn < queue[i].fn): # if child path has different annd less f(n) then it goes inside first
+                    queue.insert(i,path)
+                    inserted=True
+                    break
+                elif(path.fn == queue[i].fn): # the two paths have same value
+                    if(path.nodes[0].name != queue[i].nodes[0].name): # If the two paths end at different nodes 
+                        if(path.nodes[0].name < queue[i].nodes[0].name): # child path's node is alphabetically first, then insert it before the existing queue
+                            queue.insert(i,path)
+                            inserted=True
+                            break
+                    elif(path.nodes[0].name == queue[i].nodes[0].name): # If the two paths end at the same node
+                        if(len(path.nodes) != len(queue[i].nodes)): # If the two paths have different length
+                            if(len(path.nodes) < len(queue[i].nodes)): # Put in the child path with the shortest length first
+                                queue.insert(i,path)
+                                inserted=True
+                                break
+                        else: # The two paths have same length and end at same node     
+                            for j in range(1,len(path.nodes)): # Sorting in Lexicographic order
+                                if(path.nodes[j] < queue[i].nodes[j]):
+                                    queue.insert(i, path)
+                                    inserted=True
+                                    break
+                            break
+            if(not inserted): # Should come at the end
+                queue.append(path)
+        newQueue=queue
+
+        if (len(newQueue)!=0):
+            printQueue(newQueue, True)
+            
 
     # elif searchMethod == SearchEnum.GREEDY_SEARCH:
 
@@ -151,6 +197,7 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
     # elif searchMethod == SearchEnum.HILL_CLIMBING:
 
     # elif searchMethod == SearchEnum.BEAM_SEARCH:
+    
     return newQueue
 
 def Make_Queue(path):
@@ -231,18 +278,31 @@ def Expand(problem,path):
             newPaths.append(parentPath)
     return newPaths
 
-def printQueue(queue):
-    print("[",end='')
-    for path in queue:
-        print("<",end='')
-        countNode=0
-        for node in path.nodes:
-            print(node.name,end='')
-            countNode+=1
-            if(countNode<len(path.nodes)):
-                print(",",end='')
-        print(">",end='')
-    print("]")
+def printQueue(queue, informedSearch):
+    if(not informedSearch):
+        print("[",end='')
+        for path in queue:
+            print("<",end='')
+            countNode=0
+            for node in path.nodes:
+                print(node.name,end='')
+                countNode+=1
+                if(countNode<len(path.nodes)):
+                    print(",",end='')
+            print(">",end='')
+        print("]")
+    else:
+        print("[",end='')
+        for path in queue:
+            print(str(path.fn)+"<",end='')
+            countNode=0
+            for node in path.nodes:
+                print(node.name,end='')
+                countNode+=1
+                if(countNode<len(path.nodes)):
+                    print(",",end='')
+            print(">",end='')
+        print("]")
 
 def gn(path): 
     """
