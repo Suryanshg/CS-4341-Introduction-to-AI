@@ -371,7 +371,7 @@ def printQueue(queue, informedSearch):
                 countNode+=1
                 if(countNode<len(path.nodes)):
                     print(",",end='')
-            print(">",end='')
+            print("> ",end='')
         print("]")
 
 def gn(path): 
