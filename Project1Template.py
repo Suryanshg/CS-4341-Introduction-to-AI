@@ -273,37 +273,7 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
     elif searchMethod == SearchEnum.HILL_CLIMBING:
         for path in nodesToAddToQueue: # Set the f(n) for all paths
             path.fn = hn(path) # f(n) = h(n) for Hill Climbing Search 
-
-        # for path in nodesToAddToQueue: # Adding children path to the main queue in order
-        #     inserted=False
-        #     for i in range(len(queue)):    
-        #         if(path.fn < queue[i].fn): # if child path has different annd less f(n) then it goes inside first
-        #             queue.insert(i,path)
-        #             inserted=True
-        #             break
-        #         elif(path.fn == queue[i].fn): # the two paths have same value
-        #             if(path.nodes[0].name != queue[i].nodes[0].name): # If the two paths end at different nodes 
-        #                 if(path.nodes[0].name < queue[i].nodes[0].name): # child path's node is alphabetically first, then insert it before the existing queue
-        #                     queue.insert(i,path)
-        #                     inserted=True
-        #                     break
-        #             elif(path.nodes[0].name == queue[i].nodes[0].name): # If the two paths end at the same node
-        #                 if(len(path.nodes) != len(queue[i].nodes)): # If the two paths have different length
-        #                     if(len(path.nodes) < len(queue[i].nodes)): # Put in the child path with the shortest length first
-        #                         queue.insert(i,path)
-        #                         inserted=True
-        #                         break
-        #                 else: # The two paths have same length and end at same node     
-        #                     for j in range(1,len(path.nodes)): # Sorting in Lexicographic order
-        #                         if(path.nodes[j] < queue[i].nodes[j]):
-        #                             queue.insert(i, path)
-        #                             inserted=True
-        #                             break
-        #                     break
-        #     if(not inserted): # Should come at the end
-        #         queue.append(path)
        
-
         bestPath=Path()
         bestPath.fn = 11.0
         for path in nodesToAddToQueue:
@@ -316,7 +286,30 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
             printQueue(newQueue, True)
 
 
-    # elif searchMethod == SearchEnum.BEAM_SEARCH:
+    elif searchMethod == SearchEnum.BEAM_SEARCH:
+        for path in nodesToAddToQueue: # Set the f(n) for all paths
+            path.fn = hn(path) # f(n) = h(n) for Beam Search
+                   
+        
+        queue.extend(nodesToAddToQueue)
+
+        pathsToRemove=[]
+
+        for path1 in queue:
+            count = 0
+            for path2 in queue:
+                if(len(path1.nodes) == len(path2.nodes)): # If the length of both paths are equal, then only compare
+                    if (path1.fn > path2.fn):
+                        count+=1
+            if(count>=2):
+                 pathsToRemove.append(path1)      
+        
+        for path in pathsToRemove:
+            queue.remove(path)
+        newQueue=queue
+
+        if (len(newQueue)!=0):
+            printQueue(newQueue, True)
     
     return newQueue
 
