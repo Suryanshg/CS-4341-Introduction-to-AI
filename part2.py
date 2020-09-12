@@ -107,7 +107,7 @@ def General_Search(problem, searchMethod):
                     #pathsToRemove.append(path)
             for existingPath in queue: # Search if it exists already in queue (with same or lower value)
                 if(path.nodes[0].name==existingPath.nodes[0].name): # If exists, then search if it exists with same or lower value
-                    if(existingPath.fn <= path.fn):
+                    if(gn(existingPath) <= gn(path)):
                         alreadyInQueue=True
             if(alreadyInQueue or alreadyInExplored):
                 pathsToRemove.append(path)
