@@ -70,6 +70,7 @@ def General_Search(problem, searchMethod):
     searchMethod : SearchEnum
         The search method to use to search the graph.
     """
+    print("Expanded"+(" "*4)+"Queue")
     initialState = 'S' # name of the initial state
     finalState = 'G' # Name of the final state
     informedSearchAlgos=[SearchEnum.UNIFORM_COST_SEARCH, SearchEnum.GREEDY_SEARCH, SearchEnum.A_STAR, SearchEnum.HILL_CLIMBING, SearchEnum.BEAM_SEARCH ]
@@ -84,6 +85,8 @@ def General_Search(problem, searchMethod):
             queue[0].fn = hn(queue[0])
             printQueue(queue, True)
     else:
+        if(searchMethod==SearchEnum.ITERATIVE_DEEPENING_SEARCH):
+            print("L="+str(L),end='')
         printQueue(queue, False)
     while len(queue) > 0:  
         node = Remove_Front(queue) # Remove and return the node to expand from the queue
@@ -93,8 +96,9 @@ def General_Search(problem, searchMethod):
         #printQueue(opened_nodes)
         queue=expand_queue(queue,opened_nodes,problem,searchMethod, L)
         if (len(queue)==0 and searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH): #If unsuccessful on IDS
-            L+=1
+            L+=1   
             print("\n") 
+            print("L="+str(L),end='')
             queue=Make_Queue(Make_Queue_Node(problem.getState(initialState)))
             printQueue(queue, False)    
     return False
@@ -275,7 +279,7 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
             path.fn = hn(path) # f(n) = h(n) for Hill Climbing Search 
        
         bestPath=Path()
-        bestPath.fn = 11.0
+        bestPath.fn = float("inf")
         for path in nodesToAddToQueue:
             if(path.fn < bestPath.fn):
                 bestPath = path
@@ -392,6 +396,9 @@ def Expand(problem,path):
     return newPaths
 
 def printQueue(queue, informedSearch):
+    print(" "*6,end='')
+    print(queue[0].nodes[0].name,end='')
+    print(" "*5,end='')
     if(not informedSearch):
         print("[",end='')
         for path in queue:
@@ -447,12 +454,23 @@ def main(filename):
     graph = readInput(filename)
     for search in SearchEnum:
         print(search.value)
-        if (not General_Search(graph, search)):
+        goalPath=General_Search(graph,search)
+        if (not goalPath):
             print("failure to find path between S and G")
         else:
-            print("\tgoal reached!")
+            print(" "*6+"goal reached!")
+            print()
             # Print solution path here
-        print()
+            print(" "*6,end='')
+            print("solution found: ",end='')
+            goalPath.nodes.reverse()
+            countDash=0
+            for state in goalPath.nodes:
+                print(state.name,end='')
+                countDash+=1
+                if(countDash < len(goalPath.nodes)):
+                    print(" - ",end='')                  
+        print("\n")
 def readInput(filename):
     """
     Build the graph from the given input file.
