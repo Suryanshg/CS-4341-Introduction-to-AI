@@ -290,7 +290,7 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
             printQueue(newQueue, True)
 
 
-    elif searchMethod == SearchEnum.BEAM_SEARCH:
+    elif searchMethod == SearchEnum.BEAM_SEARCH: #Need to work on it, not quite right!!!
         for path in nodesToAddToQueue: # Set the f(n) for all paths
             path.fn = hn(path) # f(n) = h(n) for Beam Search
                    
