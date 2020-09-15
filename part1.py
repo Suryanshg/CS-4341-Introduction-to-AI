@@ -95,7 +95,7 @@ def General_Search(problem, searchMethod):
         opened_nodes = Expand(problem, node) # Get new nodes to add to the queue based on the expanded node.
         #printQueue(opened_nodes)
         queue=expand_queue(queue,opened_nodes,problem,searchMethod, L)
-        if (len(queue)==0 and searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH): #If unsuccessful on IDS
+        if (len(queue)==0 and searchMethod == SearchEnum.ITERATIVE_DEEPENING_SEARCH): # If unsuccessful on IDS
             L+=1   
             print("\n") 
             print("L="+str(L),end='')
