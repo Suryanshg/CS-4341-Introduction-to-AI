@@ -106,11 +106,13 @@ def General_Search(problem, searchMethod):
                     alreadyInExplored=True
                     #pathsToRemove.append(path)
             for existingPath in queue: # Search if it exists already in queue (with same or lower value)
-                if(path.nodes[0].name==existingPath.nodes[0].name): # If exists, then search if it exists with same or lower value
-                    if(searchMethod not in informedSearchAlgos):
+                if(path.nodes[0].name==existingPath.nodes[0].name): # If exists, then search if it exists with same or lower value      
+                    if((gn(existingPath) <= gn(path)) and (searchMethod in informedSearchAlgos)):
                         alreadyInQueue=True
-                    elif((gn(existingPath) <= gn(path))):
-                        alreadyInQueue=True
+
+                    # elif(searchMethod not in informedSearchAlgos):
+                    #     alreadyInQueue=True
+                    
                     
             if(alreadyInQueue or alreadyInExplored):
                 pathsToRemove.append(path)
