@@ -1,0 +1,163 @@
+Depth 1st search
+Expanded    Queue
+      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      B     [<B,A,S> <D,A,S> <D,S> ]
+      C     [<C,B,A,S> <E,B,A,S> <D,A,S> <D,S> ]
+      E     [<E,B,A,S> <D,A,S> <D,S> ]
+      D     [<D,E,B,A,S> <F,E,B,A,S> <D,A,S> <D,S> ]
+      R     [<R,D,E,B,A,S> <F,E,B,A,S> <D,A,S> <D,S> ]
+      F     [<F,E,B,A,S> <D,A,S> <D,S> ]
+      G     [<G,F,E,B,A,S> <D,A,S> <D,S> ]
+      goal reached!
+
+      solution found: S - A - B - E - F - G
+
+Breadth 1st search
+Expanded    Queue
+      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      D     [<D,S> <B,A,S> <D,A,S> ]
+      B     [<B,A,S> <D,A,S> <E,D,S> <R,D,S> ]
+      D     [<D,A,S> <E,D,S> <R,D,S> <C,B,A,S> <E,B,A,S> ]
+      E     [<E,D,S> <R,D,S> <C,B,A,S> <E,B,A,S> <E,D,A,S> <R,D,A,S> ]
+      R     [<R,D,S> <C,B,A,S> <E,B,A,S> <E,D,A,S> <R,D,A,S> <F,E,D,S> ]
+      C     [<C,B,A,S> <E,B,A,S> <E,D,A,S> <R,D,A,S> <F,E,D,S> ]
+      E     [<E,B,A,S> <E,D,A,S> <R,D,A,S> <F,E,D,S> ]
+      E     [<E,D,A,S> <R,D,A,S> <F,E,D,S> <F,E,B,A,S> ]
+      R     [<R,D,A,S> <F,E,D,S> <F,E,B,A,S> <F,E,D,A,S> ]
+      F     [<F,E,D,S> <F,E,B,A,S> <F,E,D,A,S> ]
+      F     [<F,E,B,A,S> <F,E,D,A,S> <G,F,E,D,S> ]
+      F     [<F,E,D,A,S> <G,F,E,D,S> <G,F,E,B,A,S> ]
+      G     [<G,F,E,D,S> <G,F,E,B,A,S> <G,F,E,D,A,S> ]
+      goal reached!
+
+      solution found: S - D - E - F - G
+
+Depth-limited search (depth-limit = 2)
+Expanded    Queue
+      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      B     [<B,A,S> <D,A,S> <D,S> ]
+      D     [<D,A,S> <D,S> ]
+      D     [<D,S> ]
+      E     [<E,D,S> <R,D,S> ]
+      R     [<R,D,S> ]
+failure to find path between S and G
+
+
+Iterative deepening search
+Expanded    Queue
+L=0      S     [<S> ]
+
+
+L=1      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      D     [<D,S> ]
+
+
+L=2      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      B     [<B,A,S> <D,A,S> <D,S> ]
+      D     [<D,A,S> <D,S> ]
+      D     [<D,S> ]
+      E     [<E,D,S> <R,D,S> ]
+      R     [<R,D,S> ]
+
+
+L=3      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      B     [<B,A,S> <D,A,S> <D,S> ]
+      C     [<C,B,A,S> <E,B,A,S> <D,A,S> <D,S> ]
+      E     [<E,B,A,S> <D,A,S> <D,S> ]
+      D     [<D,A,S> <D,S> ]
+      R     [<R,D,A,S> <D,S> ]
+      D     [<D,S> ]
+
+
+L=4      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      B     [<B,A,S> <D,A,S> <D,S> ]
+      C     [<C,B,A,S> <E,B,A,S> <D,A,S> <D,S> ]
+      E     [<E,B,A,S> <D,A,S> <D,S> ]
+      D     [<D,E,B,A,S> <F,E,B,A,S> <D,A,S> <D,S> ]
+      F     [<F,E,B,A,S> <D,A,S> <D,S> ]
+      D     [<D,A,S> <D,S> ]
+      R     [<R,D,A,S> <D,S> ]
+      D     [<D,S> ]
+
+
+L=5      S     [<S> ]
+      A     [<A,S> <D,S> ]
+      B     [<B,A,S> <D,A,S> <D,S> ]
+      C     [<C,B,A,S> <E,B,A,S> <D,A,S> <D,S> ]
+      E     [<E,B,A,S> <D,A,S> <D,S> ]
+      D     [<D,E,B,A,S> <F,E,B,A,S> <D,A,S> <D,S> ]
+      R     [<R,D,E,B,A,S> <F,E,B,A,S> <D,A,S> <D,S> ]
+      F     [<F,E,B,A,S> <D,A,S> <D,S> ]
+      G     [<G,F,E,B,A,S> <D,A,S> <D,S> ]
+      goal reached!
+
+      solution found: S - A - B - E - F - G
+
+Uniform Search (Branch-and-bound)
+Expanded    Queue
+      S     [0.0<S> ]
+      A     [3.0<A,S> 4.0<D,S> ]
+      D     [4.0<D,S> 7.0<B,A,S> ]
+      E     [6.0<E,D,S> 7.0<B,A,S> 9.0<R,D,S> ]
+      B     [7.0<B,A,S> 9.0<R,D,S> 10.0<F,E,D,S> ]
+      R     [9.0<R,D,S> 10.0<F,E,D,S> 11.0<C,B,A,S> ]
+      F     [10.0<F,E,D,S> 11.0<C,B,A,S> ]
+      C     [11.0<C,B,A,S> 13.0<G,F,E,D,S> ]
+      G     [13.0<G,F,E,D,S> ]
+      goal reached!
+
+      solution found: S - D - E - F - G
+
+Greedy Search
+Expanded    Queue
+      S     [11.0<S> ]
+      D     [8.9<D,S> 9.4<A,S> ]
+      R     [6.5<R,D,S> 6.9<E,D,S> 9.4<A,S> ]
+      E     [6.9<E,D,S> 9.4<A,S> ]
+      F     [3.0<F,E,D,S> 6.7<B,E,D,S> 9.4<A,S> ]
+      G     [0<G,F,E,D,S> 6.7<B,E,D,S> 9.4<A,S> ]
+      goal reached!
+
+      solution found: S - D - E - F - G
+
+A*
+Expanded    Queue
+      S     [11.0<S> ]
+      A     [12.4<A,S> 12.9<D,S> ]
+      D     [12.9<D,S> 13.7<B,A,S> ]
+      E     [12.9<E,D,S> 13.7<B,A,S> 15.5<R,D,S> ]
+      F     [13.0<F,E,D,S> 13.7<B,A,S> 15.5<R,D,S> ]
+      G     [13.0<G,F,E,D,S> 13.7<B,A,S> 15.5<R,D,S> ]
+      goal reached!
+
+      solution found: S - D - E - F - G
+
+Hill climbing without backtracking
+Expanded    Queue
+      S     [11.0<S> ]
+      D     [8.9<D,S> ]
+      R     [6.5<R,D,S> ]
+failure to find path between S and G
+
+
+Beam search (w = 2)
+Expanded    Queue
+      S     [11.0<S> ]
+      A     [9.4<A,S> 8.9<D,S> ]
+      D     [8.9<D,S> 6.7<B,A,S> ]
+      B     [6.7<B,A,S> 6.5<R,D,S> ]
+      R     [6.5<R,D,S> 4.0<C,B,A,S> 6.9<E,B,A,S> ]
+      C     [4.0<C,B,A,S> 6.9<E,B,A,S> ]
+      E     [6.9<E,B,A,S> ]
+      F     [3.0<F,E,B,A,S> ]
+      G     [0<G,F,E,B,A,S> ]
+      goal reached!
+
+      solution found: S - A - B - E - F - G
