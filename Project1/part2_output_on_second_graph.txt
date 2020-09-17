@@ -1,0 +1,130 @@
+Depth 1st search
+Expanded    Queue
+      S     [<S> ]
+      A     [<A,S> <T,S> <Z,S> ]
+      F     [<F,A,S> <O,A,S> <R,A,S> <T,S> <Z,S> ]
+      G     [<G,F,A,S> <O,A,S> <R,A,S> <T,S> <Z,S> ]
+      goal reached!
+
+      solution found: S - A - F - G
+
+Breadth 1st search
+Expanded    Queue
+      S     [<S> ]
+      A     [<A,S> <T,S> <Z,S> ]
+      T     [<T,S> <Z,S> <F,A,S> <O,A,S> <R,A,S> ]
+      Z     [<Z,S> <F,A,S> <O,A,S> <R,A,S> <L,T,S> ]
+      F     [<F,A,S> <O,A,S> <R,A,S> <L,T,S> <O,Z,S> ]
+      O     [<O,A,S> <R,A,S> <L,T,S> <O,Z,S> <G,F,A,S> ]
+      R     [<R,A,S> <L,T,S> <O,Z,S> <G,F,A,S> ]
+      L     [<L,T,S> <O,Z,S> <G,F,A,S> <C,R,A,S> <P,R,A,S> ]
+      O     [<O,Z,S> <G,F,A,S> <C,R,A,S> <P,R,A,S> <M,L,T,S> ]
+      G     [<G,F,A,S> <C,R,A,S> <P,R,A,S> <M,L,T,S> ]
+      goal reached!
+
+      solution found: S - A - F - G
+
+Depth-limited search (depth-limit = 2)
+Expanded    Queue
+      S     [<S> ]
+      A     [<A,S> <T,S> <Z,S> ]
+      F     [<F,A,S> <O,A,S> <R,A,S> <T,S> <Z,S> ]
+      O     [<O,A,S> <R,A,S> <T,S> <Z,S> ]
+      R     [<R,A,S> <T,S> <Z,S> ]
+      T     [<T,S> <Z,S> ]
+      L     [<L,T,S> <Z,S> ]
+      Z     [<Z,S> ]
+failure to find path between S and G
+
+
+Iterative deepening search
+Expanded    Queue
+L=0      S     [<S> ]
+
+
+L=1      S     [<S> ]
+      A     [<A,S> <T,S> <Z,S> ]
+      T     [<T,S> <Z,S> ]
+      Z     [<Z,S> ]
+
+
+L=2      S     [<S> ]
+      A     [<A,S> <T,S> <Z,S> ]
+      F     [<F,A,S> <O,A,S> <R,A,S> <T,S> <Z,S> ]
+      O     [<O,A,S> <R,A,S> <T,S> <Z,S> ]
+      R     [<R,A,S> <T,S> <Z,S> ]
+      T     [<T,S> <Z,S> ]
+      L     [<L,T,S> <Z,S> ]
+      Z     [<Z,S> ]
+
+
+L=3      S     [<S> ]
+      A     [<A,S> <T,S> <Z,S> ]
+      F     [<F,A,S> <O,A,S> <R,A,S> <T,S> <Z,S> ]
+      G     [<G,F,A,S> <O,A,S> <R,A,S> <T,S> <Z,S> ]
+      goal reached!
+
+      solution found: S - A - F - G
+
+Uniform Search (Branch-and-bound)
+Expanded    Queue
+      S     [0.0<S> ]
+      Z     [75.0<Z,S> 118.0<T,S> 140.0<A,S> ]
+      T     [118.0<T,S> 140.0<A,S> 146.0<O,Z,S> ]
+      A     [140.0<A,S> 146.0<O,Z,S> 229.0<L,T,S> ]
+      O     [146.0<O,Z,S> 220.0<R,A,S> 229.0<L,T,S> 239.0<F,A,S> ]
+      R     [220.0<R,A,S> 229.0<L,T,S> 239.0<F,A,S> ]
+      L     [229.0<L,T,S> 239.0<F,A,S> 317.0<P,R,A,S> 366.0<C,R,A,S> ]
+      F     [239.0<F,A,S> 299.0<M,L,T,S> 317.0<P,R,A,S> 366.0<C,R,A,S> ]
+      M     [299.0<M,L,T,S> 317.0<P,R,A,S> 366.0<C,R,A,S> 450.0<G,F,A,S> ]
+      P     [317.0<P,R,A,S> 366.0<C,R,A,S> 374.0<D,M,L,T,S> 450.0<G,F,A,S> ]
+      C     [366.0<C,R,A,S> 374.0<D,M,L,T,S> 418.0<G,P,R,A,S> 450.0<G,F,A,S> ]
+      D     [374.0<D,M,L,T,S> 418.0<G,P,R,A,S> 450.0<G,F,A,S> ]
+      G     [418.0<G,P,R,A,S> 450.0<G,F,A,S> ]
+      goal reached!
+
+      solution found: S - A - R - P - G
+
+Greedy Search
+Expanded    Queue
+      S     [366.0<S> ]
+      A     [253.0<A,S> 329.0<T,S> 374.0<Z,S> ]
+      F     [178.0<F,A,S> 193.0<R,A,S> 329.0<T,S> 374.0<Z,S> 380.0<O,A,S> ]
+      G     [0<G,F,A,S> 193.0<R,A,S> 329.0<T,S> 374.0<Z,S> 380.0<O,A,S> ]
+      goal reached!
+
+      solution found: S - A - F - G
+
+A*
+Expanded    Queue
+      S     [366.0<S> ]
+      A     [393.0<A,S> 447.0<T,S> 449.0<Z,S> ]
+      R     [413.0<R,A,S> 417.0<F,A,S> 447.0<T,S> 449.0<Z,S> 671.0<O,A,S> ]
+      P     [415.0<P,R,A,S> 417.0<F,A,S> 447.0<T,S> 449.0<Z,S> 526.0<C,R,A,S> 671.0<O,A,S> ]
+      F     [417.0<F,A,S> 418.0<G,P,R,A,S> 447.0<T,S> 449.0<Z,S> 526.0<C,R,A,S> 671.0<O,A,S> ]
+      G     [418.0<G,P,R,A,S> 447.0<T,S> 449.0<Z,S> 526.0<C,R,A,S> 671.0<O,A,S> ]
+      goal reached!
+
+      solution found: S - A - R - P - G
+
+Hill climbing without backtracking
+Expanded    Queue
+      S     [366.0<S> ]
+      A     [253.0<A,S> ]
+      F     [178.0<F,A,S> ]
+      G     [0<G,F,A,S> ]
+      goal reached!
+
+      solution found: S - A - F - G
+
+Beam search (w = 2)
+Expanded    Queue
+      S     [366.0<S> ]
+      A     [253.0<A,S> 329.0<T,S> ]
+      T     [329.0<T,S> 178.0<F,A,S> 380.0<O,A,S> 193.0<R,A,S> ]
+      F     [178.0<F,A,S> 193.0<R,A,S> ]
+      R     [193.0<R,A,S> 0<G,F,A,S> ]
+      G     [0<G,F,A,S> 98.0<P,R,A,S> ]
+      goal reached!
+
+      solution found: S - A - F - G
