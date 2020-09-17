@@ -309,12 +309,12 @@ def expand_queue(queue, nodesToAddToQueue, problem, searchMethod, limit):
        
         bestPath=Path()
         bestPath.fn = float("inf")
-        for path in nodesToAddToQueue:
-            if(path.fn < bestPath.fn):
-                bestPath = path
+        if(len(nodesToAddToQueue)>0):
+            for path in nodesToAddToQueue:
+                if(path.fn < bestPath.fn):
+                    bestPath = path
 
-        newQueue.append(bestPath)
-
+            newQueue.append(bestPath)
         if (len(newQueue)!=0):
             printQueue(newQueue, True)
 
