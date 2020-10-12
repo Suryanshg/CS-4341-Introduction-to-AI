@@ -13,13 +13,25 @@ for i in range(len(imgData)):
 
 oneHotVectors = to_categorical(labelData)
 
-data = [] # List of dataSets of image data, indexed by their truth values for labels.
+dataSet = [] # List of classes of image data, indexed by their truth values for labels.
 for i in range(10):
-    data.append([])  
+    dataSet.append([])  
 
-for i in range(len(flatImgData)):
+for i in range(len(flatImgData)): # Setting up the dataSet according to classes
     index = np.argmax(oneHotVectors[i])
-    data[index].append(flatImgData[i])
+    x_data = flatImgData[i]
+    y_data = oneHotVectors[i]
+    data = np.concatenate((x_data, y_data))
+    dataSet[index].append(data)
+
+# for data in dataSet: # Shuffling the vectors for each classes randomly
+#     np.random.shuffle(data)
+
+# train_data = []
+# for data in dataSet:
+#     upperLimit = int(len(data) * 0.6)
+#     x_data = data[0:upperLimit+1]
+#     y_data = []
 
 
 
