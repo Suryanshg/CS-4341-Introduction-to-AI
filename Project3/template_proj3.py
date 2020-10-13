@@ -21,17 +21,37 @@ for i in range(len(flatImgData)): # Setting up the dataSet according to classes
     index = np.argmax(oneHotVectors[i])
     x_data = flatImgData[i]
     y_data = oneHotVectors[i]
-    data = np.concatenate((x_data, y_data))
+    data = np.concatenate((x_data, y_data)) # Concatenating the x_data and y_data for uniform shuffling in future
     dataSet[index].append(data)
 
-# for data in dataSet: # Shuffling the vectors for each classes randomly
-#     np.random.shuffle(data)
+train_data = []
+val_data = []
+test_data = []
 
-# train_data = []
-# for data in dataSet:
-#     upperLimit = int(len(data) * 0.6)
-#     x_data = data[0:upperLimit+1]
-#     y_data = []
+for data in dataSet: # Doing Stratified Sampling
+    upperLimit60 = int(len(data) * 0.6)
+    upperLimit75 = int(len(data) * 0.75)
+    train_data.extend(data[0:upperLimit60+1])
+    val_data.extend(data[upperLimit60+1:upperLimit75+1])
+    test_data.extend(data[upperLimit75+1:])
+
+# Performing Random Shuffling
+np.random.shuffle(train_data)
+np.random.shuffle(test_data)
+np.random.shuffle(val_data)
+
+x_train = []
+y_train = []
+
+x_val = []
+y_val = []
+
+x_test = []
+y_test = []
+
+
+
+
 
 
 
