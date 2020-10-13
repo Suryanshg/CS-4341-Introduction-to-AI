@@ -40,50 +40,48 @@ np.random.shuffle(train_data)
 np.random.shuffle(test_data)
 np.random.shuffle(val_data)
 
+# Segragating Concatenated data into respective x and y data
 x_train = []
 y_train = []
+
+for data in train_data:
+    x_train.append(data[0:len(data)-10])
+    y_train.append(data[len(data)-10:])
 
 x_val = []
 y_val = []
 
+for data in val_data:
+    x_val.append(data[0:len(data)-10])
+    y_val.append(data[len(data)-10:])
+
 x_test = []
 y_test = []
 
+for data in test_data:
+    x_test.append(data[0:len(data)-10])
+    y_test.append(data[len(data)-10:])
 
 
+# # Model Template
+
+# model = Sequential() # declare model
+# model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
+# model.add(Activation('relu'))
+# #
+# #
+# #
+# # Fill in Model Here
+# #
+# #
+# model.add(Dense(10, kernel_initializer='he_normal')) # last layer
+# model.add(Activation('softmax'))
 
 
-
-
-
-
-
-
-    
-
-
-    
-
-
-# Model Template
-
-model = Sequential() # declare model
-model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
-model.add(Activation('relu'))
-#
-#
-#
-# Fill in Model Here
-#
-#
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('softmax'))
-
-
-# Compile Model
-model.compile(optimizer='sgd',
-              loss='categorical_crossentropy', 
-              metrics=['accuracy'])
+# # Compile Model
+# model.compile(optimizer='sgd',
+#               loss='categorical_crossentropy', 
+#               metrics=['accuracy'])
 
 # Train Model
 #history = model.fit(x_train, y_train,  validation_data = (x_val, y_val), epochs=10, batch_size=512)
