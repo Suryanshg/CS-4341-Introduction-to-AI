@@ -40,7 +40,7 @@ np.random.shuffle(train_data)
 np.random.shuffle(test_data)
 np.random.shuffle(val_data)
 
-# Segragating Concatenated data into respective x and y data
+# Segregating Concatenated data into respective x and y data
 x_train = []
 y_train = []
 
@@ -67,9 +67,9 @@ for data in test_data:
 
 model = Sequential() # declare model
 model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
-model.add(Activation('relu'))
+model.add(Activation('sigmoid'))
 
-# model.add(Dense(10, kernel_initializer='he_normal')) # second layer
+# model.add(Dense(2, kernel_initializer='he_normal')) # second layer
 # model.add(Activation('relu'))
 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
@@ -82,11 +82,12 @@ model.compile(optimizer='sgd',
               metrics=['accuracy'])
 
 #Train Model
-history = model.fit(np.array(x_train), np.array(y_train),  validation_data = (np.array(x_val), np.array(y_val)), epochs=100, batch_size=512)
+history = model.fit(np.array(x_train), np.array(y_train),  validation_data = (np.array(x_val), np.array(y_val)), epochs=10, batch_size=512)
 
 
 #Report Results
 #print(history.history)
 prediction = model.predict(np.array(x_test))
-x = model.evaluate(np.array(x_test), np.array(y_test), verbose=1)
-print(x[1])
+# x = model.evaluate(np.array(x_test), np.array(y_test), verbose=1)
+print(np.argmax(prediction[0]))
+print(np.argmax(y_test[0]))
