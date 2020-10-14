@@ -63,31 +63,30 @@ for data in test_data:
     y_test.append(data[len(data)-10:])
 
 
-# # Model Template
+# Model Template
 
-# model = Sequential() # declare model
-# model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
+model = Sequential() # declare model
+model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
+model.add(Activation('relu'))
+
+# model.add(Dense(10, kernel_initializer='he_normal')) # second layer
 # model.add(Activation('relu'))
-# #
-# #
-# #
-# # Fill in Model Here
-# #
-# #
-# model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-# model.add(Activation('softmax'))
+
+model.add(Dense(10, kernel_initializer='he_normal')) # last layer
+model.add(Activation('softmax'))
 
 
-# # Compile Model
-# model.compile(optimizer='sgd',
-#               loss='categorical_crossentropy', 
-#               metrics=['accuracy'])
+# Compile Model
+model.compile(optimizer='sgd',
+              loss='categorical_crossentropy', 
+              metrics=['accuracy'])
 
-# Train Model
-#history = model.fit(x_train, y_train,  validation_data = (x_val, y_val), epochs=10, batch_size=512)
+#Train Model
+history = model.fit(np.array(x_train), np.array(y_train),  validation_data = (np.array(x_val), np.array(y_val)), epochs=100, batch_size=512)
 
 
-# Report Results
-
+#Report Results
 #print(history.history)
-#model.predict()
+prediction = model.predict(np.array(x_test))
+x = model.evaluate(np.array(x_test), np.array(y_test), verbose=1)
+print(x[1])
