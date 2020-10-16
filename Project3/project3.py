@@ -66,17 +66,14 @@ for data in test_data:
 
 # Model Template
 model = Sequential() # declare model
-model.add(Dense(100, input_shape=(28*28, ), kernel_initializer='random_normal')) # first layer
+model.add(Dense(100, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
 model.add(Activation('relu'))
 
-model.add(Dense(200, kernel_initializer='random_normal')) # Second layer
+model.add(Dense(200, kernel_initializer='he_normal')) # Second layer
 model.add(Activation('selu'))
 
-model.add(Dense(300, kernel_initializer='random_normal')) # Third layer
+model.add(Dense(300, kernel_initializer='he_normal')) # Third layer
 model.add(Activation('tanh'))
-
-# model.add(Dense(50, kernel_initializer='random_normal')) # Fourth layer
-# model.add(Activation('relu'))
 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
@@ -103,8 +100,6 @@ plt.legend(loc='lower right')
 plt.xlabel('Number of Epochs')
 plt.ylabel('Training / Validation Accuracy')
 plt.show()
-
-
 
 
 x = model.evaluate(np.array(x_test), np.array(y_test), verbose=1)
